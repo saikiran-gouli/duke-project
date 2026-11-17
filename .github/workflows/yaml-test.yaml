@@ -1,0 +1,20 @@
+name: YAML Configuration POC
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      config_file:
+        description: "Select configuration file"
+        required: true
+        type: choice
+        options:
+          - dev.yaml
+ 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Show selected configuration
+        run: |
+          echo "Selected configuration: ${{ inputs.config_file }}"
