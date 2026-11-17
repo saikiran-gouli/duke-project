@@ -11,10 +11,19 @@ on:
           - dev.yaml
  
 jobs:
-  test:
+  read-configuration:
     runs-on: ubuntu-latest
  
     steps:
-      - name: Show selected configuration
+      # The GitHub runner needs a copy of the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+ 
+      # Install PyYAML so Python can read YAML
+      - name: Install PyYAML
+        run: pip install pyyaml
+ 
+      # Pass the selected filename to our Python script
+      - name: Read selected YAML
         run: |
-          echo "Selected configuration: ${{ inputs.config_file }}"
+          python scripts/read_config.py "${{ inputs.config_file }}"
