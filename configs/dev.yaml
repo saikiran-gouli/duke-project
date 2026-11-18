@@ -1,4 +1,4 @@
-environment:dev
-aws_region:us-east-1
-application:test-app
-action:deploy
+environment: dev
+aws_region: us-east-1
+application: test-app
+action: deploy
