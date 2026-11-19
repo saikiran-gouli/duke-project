@@ -1,29 +1,75 @@
-name: YAML Configuration POC
+# name: YAML Configuration POC
  
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       config_file:
+#         description: "Select configuration file"
+#         required: true
+#         type: choice
+#         options:
+#           - dev.yaml
+ 
+# jobs:
+#   read-configuration:
+#     runs-on: ubuntu-latest
+ 
+#     steps:
+#       # The GitHub runner needs a copy of the repository
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+ 
+#       # Install PyYAML so Python can read YAML
+#       - name: Install PyYAML
+#         run: pip install pyyaml
+ 
+#       # Pass the selected filename to our Python script
+
+
+
+name: YAML Configuration POC
+
+env:
+  CONFIG_FILE: configs/yaml-test.yaml
+
 on:
   workflow_dispatch:
     inputs:
-      config_file:
-        description: "Select configuration file"
+      environment:
+        description: "Target environment"
         required: true
-        type: choice
-        options:
-          - dev.yaml
- 
+        type: string
+
+      aws_region:
+        description: "AWS region"
+        required: true
+        type: string
+
+      application:
+        description: "Application name"
+        required: true
+        type: string
+
+      action:
+        description: "Action to perform"
+        required: true
+        type: string
+
 jobs:
-  read-configuration:
+  test:
     runs-on: ubuntu-latest
- 
+
     steps:
-      # The GitHub runner needs a copy of the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
- 
-      # Install PyYAML so Python can read YAML
-      - name: Install PyYAML
-        run: pip install pyyaml
- 
-      # Pass the selected filename to our Python script
-      - name: Read selected YAML
+      - name: Display inputs
         run: |
-          python scripts/read_config.py "${{ inputs.config_file }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "AWS Region: ${{ inputs.aws_region }}"
+          echo "Application: ${{ inputs.application }}"
+          echo "Action: ${{ inputs.action }}"
+
+      - name: Test
+        run: |
+          echo "POC workflow successfully triggered"
+#       - name: Read selected YAML
+#         run: |
+#           python scripts/read_config.py "${{ inputs.config_file }}"
